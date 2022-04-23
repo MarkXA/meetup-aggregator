@@ -1,0 +1,25 @@
+{
+  "bindings": [
+    {
+      "name": "updateTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "%UpdateCron%"
+    },
+    {
+      "name": "jsonBlob",
+      "type": "blob",
+      "path": "public/ni-tech-meetups.json",
+      "connection": "BlobStorage",
+      "direction": "out"
+    },
+    {
+      "name": "icalBlob",
+      "type": "blob",
+      "path": "public/ni-tech-meetups.ics",
+      "connection": "BlobStorage",
+      "direction": "out"
+    }
+  ],
+  "scriptFile": "../../dist/UpdateMeetups/index.js"
+}
