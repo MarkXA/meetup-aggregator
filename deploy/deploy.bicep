@@ -55,12 +55,11 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2021-02-01' = {
 resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
   name: functionAppName
   location: location
-  kind: 'functionapp,linux'
+  kind: 'functionapp'
   properties: {
     reserved: true
     serverFarmId: hostingPlan.id
     siteConfig: {
-      linuxFxVersion: 'NODE|16'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
@@ -77,6 +76,10 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'node'
+        }
+        {
+          name: 'WEBSITE_NODE_DEFAULT_VERSION'
+          value: '~16'
         }
         {
           name: 'BlobStorage'
