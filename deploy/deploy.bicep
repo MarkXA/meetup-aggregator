@@ -48,7 +48,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2021-02-01' = {
     family: 'Y'
   }
   properties: {
-    reserved: true
+    computeMode: 'Dynamic'
   }
 }
 
