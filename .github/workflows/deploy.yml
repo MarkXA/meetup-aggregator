@@ -1,7 +1,7 @@
 name: Deploy Node.js project to Azure Function App
 
 on:
-  [push]
+  [push, workflow_dispatch]
 
 env:
   AZURE_FUNCTIONAPP_NAME: meetup-aggregator    # set this to your application's name
