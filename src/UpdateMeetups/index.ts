@@ -16,6 +16,8 @@ type MeetupEvent = {
 }
 
 const timerTrigger: AzureFunction = async function (context: Context): Promise<void> {
+    context.log('UpdateMeetups triggered');
+
     const meetupIds = [
         'AWS-Usergroup-Belfast',
         'Azure-User-Group-Belfast',
@@ -56,7 +58,7 @@ const timerTrigger: AzureFunction = async function (context: Context): Promise<v
             context.log(meetupId);
             context.log(JSON.stringify(rawEvents));
 
-            const meetupEvents = rawEvents.map(
+            const meetupEvents = rawEvents.length ? rawEvents.map(
                 (rawEvent: any) => {
                     return <MeetupEvent>{
                         id: rawEvent.url.split('/').at(-2) + '@mxa.meetup.com',
@@ -67,7 +69,7 @@ const timerTrigger: AzureFunction = async function (context: Context): Promise<v
                         endTime: dayjs(rawEvent.endDate).utc(),
                     };
                 }
-            );
+            ) : [];
 
             context.log(JSON.stringify(meetupEvents));
 

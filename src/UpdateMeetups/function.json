@@ -21,5 +21,5 @@
       "direction": "out"
     }
   ],
-  "scriptFile": "../../dist/UpdateMeetups/index.js"
+  "scriptFile": "../dist/UpdateMeetups/index.js"
 }

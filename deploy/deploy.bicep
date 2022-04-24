@@ -29,35 +29,57 @@ resource appInsights 'microsoft.insights/components@2020-02-02' = {
   }
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   name: storageAccountName
   location: location
+  kind: 'StorageV2'
   sku: {
     name: 'Standard_LRS'
   }
-  kind: 'Storage'
+
+  resource blobStorage 'blobservices@2021-08-01' = {
+    name: 'default'
+    properties: {
+      cors: {
+        corsRules: [
+          {
+            allowedOrigins: [
+              '*'
+            ]
+            allowedMethods: [
+              'GET'
+            ]
+            allowedHeaders: [
+              '*'
+            ]
+            exposedHeaders: [
+              '*'
+            ]
+            maxAgeInSeconds: 3600
+          }
+        ]
+      }
+    }
+  }
 }
 
-resource hostingPlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   name: hostingPlanName
   location: location
+  kind: 'functionapp'
   sku: {
     name: 'Y1'
     tier: 'Dynamic'
     size: 'Y1'
     family: 'Y'
   }
-  properties: {
-    computeMode: 'Dynamic'
-  }
 }
 
-resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
+resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
   name: functionAppName
   location: location
   kind: 'functionapp'
   properties: {
-    reserved: true
     serverFarmId: hostingPlan.id
     siteConfig: {
       appSettings: [
