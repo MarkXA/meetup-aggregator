@@ -4,6 +4,7 @@ import * as utc from 'dayjs/plugin/utc.js';
 import ical from 'ical-generator';
 import * as jsdom from 'jsdom';
 import fetch from 'node-fetch';
+import { meetupList } from '../meetupList.js';
 dayjs.extend(utc);
 
 type MeetupEvent = {
@@ -18,35 +19,9 @@ type MeetupEvent = {
 const timerTrigger: AzureFunction = async function (context: Context): Promise<void> {
     context.log('UpdateMeetups triggered');
 
-    const meetupIds = [
-        'AWS-Usergroup-Belfast',
-        'Azure-User-Group-Belfast',
-        'BCS-Northern-Ireland',
-        'Belfast-JS',
-        'belfast-kafka',
-        'belfast-lug',
-        'Belfast-NET-Meetup',
-        'BelfastJUG',
-        'devbash',
-        'DevOps-Belfast',
-        'farsetlabs',
-        'Google-Developer-Group-Belfast',
-        'Ladies-that-UX-Belfast',
-        'newry-digital',
-        'nigmacommunity',
-        'North-by-Northwest-Tech-Meetup',
-        'OWASP-Belfast',
-        'ppug_belfast',
-        'ProductTank-Belfast',
-        'PyBelfast',
-        'UXBelfast',
-        'women-in-tech-belfast',
-        'Women-Who-Code-Belfast'
-    ];
-
     const allEvents: MeetupEvent[] = [];
 
-    for (const meetupId of meetupIds) {
+    for (const meetupId of meetupList.meetupComIds) {
         for (let n = 0; n < 3; n++) {
             const response = await fetch(`https://www.meetup.com/${meetupId}/events/`);
             const html = await response.text();
