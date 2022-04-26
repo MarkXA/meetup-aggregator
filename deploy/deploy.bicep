@@ -100,6 +100,14 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
           value: 'node'
         }
         {
+          name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+        }
+        {
+          name: 'WEBSITE_CONTENTSHARE'
+          value: functionAppName
+        }
+        {
           name: 'WEBSITE_NODE_DEFAULT_VERSION'
           value: '~16'
         }
