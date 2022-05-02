@@ -74,7 +74,7 @@ const fetchMeetupComEvents = async function (meetupIds: string[], context: Conte
                 const meetupEvents = rawEvents.length ? rawEvents.map(
                     (rawEvent: any) => {
                         return <MeetupEvent>{
-                            id: rawEvent.url.split('/').at(-2) + '@mxa.meetup.com',
+                            id: `${rawEvent.url.split('/').at(-2)}@mxa.meetup.com`,
                             meetupName: rawEvent.organizer.name,
                             eventName: rawEvent.name,
                             url: rawEvent.url,
@@ -101,6 +101,7 @@ const fetchMeetupComEvents = async function (meetupIds: string[], context: Conte
 
 const fetchEventbriteEvents = async function (meetupIds: string[], context: Context): Promise<MeetupEvent[]> {
     const result = [];
+    const now = dayjs();
 
     for (const meetupId of meetupIds) {
         context.log('Fetching events for Eventbrite ID', meetupId);
@@ -113,18 +114,43 @@ const fetchEventbriteEvents = async function (meetupIds: string[], context: Cont
             const rawEvents = JSON.parse(
                 (Array.from(dom.window.document.querySelectorAll('script[type="application/ld+json"]')) as Array<any>).at(-1)?.textContent as string) as Array<any>;
 
-            const meetupEvents = rawEvents.length ? rawEvents.map(
-                (rawEvent: any) => {
-                    return <MeetupEvent>{
-                        id: rawEvent.url.split('/').at(-1) + '@mxa.meetup.com',
-                        meetupName: rawEvent.organizer.name,
-                        eventName: rawEvent.name,
-                        url: rawEvent.url,
-                        startTime: dayjs(rawEvent.startDate).utc(),
-                        endTime: dayjs(rawEvent.endDate).utc(),
-                    };
+            const meetupEvents = [];
+            if (rawEvents.length) {
+                for (const rawEvent of rawEvents) {
+                    if (dayjs(rawEvent.endDate).isBefore(now))
+                        continue;
+                
+                    const eventbriteId = rawEvent.url.split('-').at(-1);
+                    const seriesResponse = await fetch(`https://www.eventbrite.co.uk/api/v3/destination/events/?event_ids=${eventbriteId}&expand=series&page_size=50&include_parent_events=false`);
+                    const series = JSON.parse(await seriesResponse.text());
+                    const nextDates =
+                        series.events
+                        && series.events.length
+                        && series.events[0].series
+                        && series.events[0].series.next_dates;
+                    if (nextDates) {
+                        for (const dates of nextDates) {
+                            meetupEvents.push(<MeetupEvent>{
+                                id: `${rawEvent.url.split('/').at(-1)}-${dates.id}@mxa.meetup.com`,
+                                meetupName: rawEvent.organizer.name,
+                                eventName: rawEvent.name,
+                                url: rawEvent.url,
+                                startTime: dayjs(dates.start).utc(),
+                                endTime: dayjs(dates.end).utc(),
+                            });
+                        };
+                    } else {
+                        meetupEvents.push(<MeetupEvent>{
+                            id: `${rawEvent.url.split('/').at(-1)}@mxa.meetup.com`,
+                            meetupName: rawEvent.organizer.name,
+                            eventName: rawEvent.name,
+                            url: rawEvent.url,
+                            startTime: dayjs(rawEvent.startDate).utc(),
+                            endTime: dayjs(rawEvent.endDate).utc(),
+                        });
+                    }
                 }
-            ) : [];
+            }
 
             context.log(JSON.stringify(meetupEvents));
 
