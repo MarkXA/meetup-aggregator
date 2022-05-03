@@ -9,6 +9,7 @@ export const meetupList = {
         'belfast-lug',
         'Belfast-NET-Meetup',
         'BelfastJUG',
+        'belfawst-meetup',
         'devbash',
         'DevOps-Belfast',
         'farsetlabs',
