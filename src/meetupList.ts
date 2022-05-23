@@ -2,7 +2,6 @@ export const meetupList = {
     "meetupComIds": [
         'AWS-Usergroup-Belfast',
         'Azure-User-Group-Belfast',
-        'BCS-Northern-Ireland',
         'Belfast-Automation-Software-Testing',
         'Belfast-JS',
         'belfast-kafka',
