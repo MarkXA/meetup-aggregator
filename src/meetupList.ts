@@ -1,5 +1,5 @@
 export const meetupList = {
-    "meetupComIds": [
+    'meetupComIds': [
         'AWS-Usergroup-Belfast',
         'Azure-User-Group-Belfast',
         'Belfast-Automation-Software-Testing',
@@ -29,7 +29,10 @@ export const meetupList = {
         'bcs-the-chartered-institute-for-it-12637046414',
         'raise-ventures-15480456929'
     ],
-    "manualEntry": [
+    'titoIds': [
+        'nigamedev'
+    ],
+    'manualEntry': [
         {
             id: 'airc2022@mxa.meetup.com',
             meetupName: 'Ulster University AI Research Centre',
@@ -37,6 +40,14 @@ export const meetupList = {
             url: 'https://computing.ulster.ac.uk/AIRC2022/',
             startTime: '2022-04-29T08:30:00+0100',
             endTime: '2022-04-29T12:45:00+0100'
+        },
+        {
+            id: 'nigamedev-reunion@mxa.ti.to',
+            meetupName: 'NI Game Dev Network',
+            eventName: 'NI Game Dev Reunion',
+            url: 'https://ti.to/nigamedev/reunion',
+            startTime: '2022-06-08T19:30:00+0100',
+            endTime: '2022-06-08T23:30:00+0100'
         }
     ]
 };
