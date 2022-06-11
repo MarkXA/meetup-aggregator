@@ -1,10 +1,9 @@
 {
   "bindings": [
     {
-      "name": "updateTimer",
-      "type": "timerTrigger",
-      "direction": "in",
-      "schedule": "%UpdateCron%"
+      "name": "context",
+      "type": "orchestrationTrigger",
+      "direction": "in"
     },
     {
       "name": "jsonBlob",
@@ -21,5 +20,5 @@
       "direction": "out"
     }
   ],
-  "scriptFile": "../dist/UpdateMeetups/index.js"
+  "scriptFile": "../dist/UpdateEventsOrchestrator/index.js"
 }

@@ -1,0 +1,16 @@
+{
+  "bindings": [
+    {
+      "name": "updateTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "%UpdateCron%"
+    },
+    {
+      "name": "starter",
+      "type": "durableClient",
+      "direction": "in"
+    }
+  ],
+  "scriptFile": "../dist/UpdateEvents/index.js"
+}

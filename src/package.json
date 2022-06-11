@@ -12,11 +12,12 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@types/jsdom": "^16.2.14",
     "dayjs": "^1.11.1",
     "dayjs-plugin-utc": "^0.1.2",
+    "durable-functions": "^2.0.0",
     "ical-generator": "^3.4.1",
-    "jsdom": "^19.0.0",
-    "node-fetch": "^2.6.1"
+    "jsdom": "^19.0.0"
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",
