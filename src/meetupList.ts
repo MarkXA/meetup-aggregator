@@ -16,6 +16,7 @@ export const meetupList = {
         'Google-Developer-Group-Belfast',
         'Ladies-that-UX-Belfast',
         'newry-digital',
+        'nigamedev',
         'nigmacommunity',
         'North-by-Northwest-Tech-Meetup',
         'OWASP-Belfast',
@@ -29,9 +30,6 @@ export const meetupList = {
     'eventbriteIds': [
         'bcs-the-chartered-institute-for-it-12637046414',
         'raise-ventures-15480456929'
-    ],
-    'titoIds': [
-        'nigamedev'
     ],
     'manualEntry': [
         {
