@@ -14,6 +14,7 @@ export const meetupList = {
         'DevOps-Belfast',
         'farsetlabs',
         'Google-Developer-Group-Belfast',
+        'hug-ireland-hashicorp-user-group',
         'infosec-ni',
         'Ladies-that-UX-Belfast',
         'newry-digital',
