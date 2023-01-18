@@ -4,6 +4,7 @@ export const meetupList = {
         'AWS-Usergroup-Belfast',
         'Azure-User-Group-Belfast',
         'Belfast-Automation-Software-Testing',
+        'belfast-gophers',
         'Belfast-JS',
         'belfast-kafka',
         'belfast-lug',
