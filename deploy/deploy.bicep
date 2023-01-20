@@ -117,7 +117,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
         }
         {
           name: 'UpdateCron'
-          value: '3 3 3 * * *'
+          value: '3 3 */2 * * *'
         }
       ]
     }
