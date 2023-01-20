@@ -18,6 +18,7 @@ export const meetupList = {
         'hug-ireland-hashicorp-user-group',
         'infosec-ni',
         'Ladies-that-UX-Belfast',
+        'managed-intel-threat-data-engineering',
         'newry-digital',
         'nigamedev',
         'nigmacommunity',
