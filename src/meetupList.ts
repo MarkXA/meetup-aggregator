@@ -23,6 +23,7 @@ export const meetupList = {
         'nigamedev',
         'nigmacommunity',
         'North-by-Northwest-Tech-Meetup',
+        'ns_belfast',
         'OWASP-Belfast',
         'ppug_belfast',
         'ProductTank-Belfast',
