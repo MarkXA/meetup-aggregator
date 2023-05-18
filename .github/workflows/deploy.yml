@@ -40,6 +40,7 @@ jobs:
         scope: resourcegroup
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: deploy/deploy.bicep
+        failOnStdErr: false
     
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@v1
