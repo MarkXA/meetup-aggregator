@@ -35,6 +35,7 @@ export const meetupList = {
     ],
     'eventbriteIds': [
         'bcs-the-chartered-institute-for-it-12637046414',
+        'ni-cyber-54621108933',
         'raise-ventures-15480456929'
     ],
     'manualEntry': [
