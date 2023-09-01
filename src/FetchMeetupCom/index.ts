@@ -18,21 +18,32 @@ const activityFunction: AzureFunction = async function (context: Context): Promi
                 const html = (await axios.get(`https://www.meetup.com/${meetupId}/events/`)).data;
                 const dom = new jsdom.JSDOM(html);
 
-                const rawEvents = JSON.parse(
-                    dom.window.document.querySelector('script[type="application/ld+json"]')?.textContent as string) as Array<any>;
+                const rawJson = JSON.parse(
+                    dom.window.document.querySelector('script[id="__NEXT_DATA__"]')?.textContent as string) as any;
 
-                const happenings = rawEvents.length ? rawEvents.map(
-                    (rawEvent: any) => {
-                        return <Happening>{
-                            id: `${rawEvent.url.split('/').at(-2)}@mxa.meetup.com`,
-                            meetupName: rawEvent.organizer.name,
-                            eventName: rawEvent.name,
-                            url: rawEvent.url,
-                            startTime: dayjs(rawEvent.startDate).utc(),
-                            endTime: dayjs(rawEvent.endDate).utc(),
-                        };
+                let happenings = [];
+
+                const state = rawJson['props']?.['pageProps']?.['__APOLLO_STATE__'];
+                if (state) {
+                    const states = Object.values(state) as any[];
+                    const group = states.find(s => s['__typename'] === 'Group');
+                    const rawEvents = states.filter(s => s['__typename'] === 'Event');
+
+                    if (group && rawEvents) {
+                        happenings = rawEvents.map(
+                            (rawEvent: any) => {
+                                return <Happening>{
+                                    id: `${rawEvent.id}@mxa.meetup.com`,
+                                    meetupName: group.name,
+                                    eventName: rawEvent.title,
+                                    url: rawEvent.eventUrl,
+                                    startTime: dayjs(rawEvent.dateTime).utc(),
+                                    endTime: dayjs(rawEvent.endTime).utc(),
+                                };
+                            }
+                        );
                     }
-                ) : [];
+                }
 
                 context.log(JSON.stringify(happenings));
 
