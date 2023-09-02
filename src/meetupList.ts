@@ -20,6 +20,7 @@ export const meetupList = {
         'infosec-ni',
         'Ladies-that-UX-Belfast',
         'managed-intel-threat-data-engineering',
+        'meetup-group-mjayxapo',
         'newry-digital',
         'nigamedev',
         'nigmacommunity',
