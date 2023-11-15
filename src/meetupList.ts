@@ -21,6 +21,7 @@ export const meetupList = {
         'Google-Developer-Group-Belfast',
         'hug-ireland-hashicorp-user-group',
         'infosec-ni',
+        'kotlin-belfast',
         'Ladies-that-UX-Belfast',
         'managed-intel-threat-data-engineering',
         'MCS-Group-Meetup',
