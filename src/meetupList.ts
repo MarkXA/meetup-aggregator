@@ -17,6 +17,7 @@ export const meetupList = {
         'belfawst-meetup',
         'devbash',
         'DevOps-Belfast',
+        'everything-data',
         'farsetlabs',
         'Google-Developer-Group-Belfast',
         'gsf-ni',
