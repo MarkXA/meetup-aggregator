@@ -18,16 +18,17 @@ const activityFunction: AzureFunction = async function (context: Context): Promi
             const html = (await axios.get(`https://www.eventbrite.co.uk/o/${meetupId}`)).data;
             const dom = new jsdom.JSDOM(html);
 
-            const rawEvents = JSON.parse(
-                (Array.from(dom.window.document.querySelectorAll('script[type="application/ld+json"]')) as Array<any>).at(-1)?.textContent as string) as Array<any>;
+            const rawJson = JSON.parse(
+                (Array.from(dom.window.document.querySelectorAll('script[type="application/ld+json"]')) as Array<any>).at(-1)?.textContent as string);
 
             const happenings = [];
-            if (rawEvents.length) {
-                for (const rawEvent of rawEvents) {
-                    if (dayjs(rawEvent.endDate).isBefore(now))
+            if (rawJson.itemListElement) {
+                for (const element of rawJson.itemListElement) {
+                    const sourceEvent = element.item; 
+                    if (dayjs(sourceEvent.endDate).isBefore(now))
                         continue;
 
-                    const eventbriteId = rawEvent.url.split('-').at(-1);
+                    const eventbriteId = sourceEvent.url.split('-').at(-1);
                     const series = (await axios.get(`https://www.eventbrite.co.uk/api/v3/destination/events/?event_ids=${eventbriteId}&expand=series&page_size=50&include_parent_events=false`)).data;
                     const nextDates =
                         series.events
@@ -37,22 +38,22 @@ const activityFunction: AzureFunction = async function (context: Context): Promi
                     if (nextDates) {
                         for (const dates of nextDates) {
                             happenings.push(<Happening>{
-                                id: `${rawEvent.url.split('/').at(-1)}-${dates.id}@mxa.meetup.com`,
-                                meetupName: rawEvent.organizer.name,
-                                eventName: rawEvent.name,
-                                url: rawEvent.url,
+                                id: `${sourceEvent.url.split('/').at(-1)}-${dates.id}@mxa.meetup.com`,
+                                meetupName: sourceEvent.organizer.name,
+                                eventName: sourceEvent.name,
+                                url: sourceEvent.url,
                                 startTime: dayjs(dates.start).utc(),
                                 endTime: dayjs(dates.end).utc(),
                             });
                         };
                     } else {
                         happenings.push(<Happening>{
-                            id: `${rawEvent.url.split('/').at(-1)}@mxa.meetup.com`,
-                            meetupName: rawEvent.organizer.name,
-                            eventName: rawEvent.name,
-                            url: rawEvent.url,
-                            startTime: dayjs(rawEvent.startDate).utc(),
-                            endTime: dayjs(rawEvent.endDate).utc(),
+                            id: `${sourceEvent.url.split('/').at(-1)}@mxa.meetup.com`,
+                            meetupName: sourceEvent.organizer.name,
+                            eventName: sourceEvent.name,
+                            url: sourceEvent.url,
+                            startTime: dayjs(sourceEvent.startDate).utc(),
+                            endTime: dayjs(sourceEvent.endDate).utc(),
                         });
                     }
                 }
@@ -60,7 +61,7 @@ const activityFunction: AzureFunction = async function (context: Context): Promi
 
             context.log(JSON.stringify(happenings));
 
-            if (happenings.length > 0 && rawEvents.every(e => e.organizer.url.endsWith(`/${meetupId}`))) {
+            if (happenings.length > 0 && rawJson.every(e => e.organizer.url.endsWith(`/${meetupId}`))) {
                 if (meetupId.startsWith('bcs-')) {
                     result.push(...happenings.filter(e => e.eventName.indexOf('Northern Ireland') !== -1));
                 } else {
