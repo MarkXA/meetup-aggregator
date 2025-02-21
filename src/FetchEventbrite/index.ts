@@ -61,7 +61,7 @@ const activityFunction: AzureFunction = async function (context: Context): Promi
 
             context.log(JSON.stringify(happenings));
 
-            if (happenings.length > 0 && rawJson.every(e => e.organizer.url.endsWith(`/${meetupId}`))) {
+            if (happenings.length > 0 && rawJson.itemListElement.every(e => e.item.organizer.url.endsWith(`/${meetupId}`))) {
                 if (meetupId.startsWith('bcs-')) {
                     result.push(...happenings.filter(e => e.eventName.indexOf('Northern Ireland') !== -1));
                 } else {
