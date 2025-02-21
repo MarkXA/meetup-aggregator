@@ -43,6 +43,7 @@ export const meetupList = {
     ],
     'eventbriteIds': [
         'bcs-the-chartered-institute-for-it-12637046414',
+        'belfast-nerd-pub-quiz-90740074163',
         'farset-labs-2238451237',
         'infosec-battlebots-76513399703',
         'ni-cyber-54621108933',
