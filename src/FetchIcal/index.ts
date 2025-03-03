@@ -19,18 +19,16 @@ const activityFunction: AzureFunction = async function (context: Context): Promi
 
         context.log(JSON.stringify(events));
 
-        let happenings = Object.values(events).map(
-            (iCalEvent: any) => {
-                return <Happening>{
-                    id: iCalEvent.id,
-                    meetupName: icalInfo.meetupName,
-                    eventName: iCalEvent.summary,
-                    url: iCalEvent.url,
-                    startTime: dayjs(iCalEvent.start).utc(),
-                    endTime: dayjs(iCalEvent.end).utc(),
-                };
-            }
-        );
+        let happenings = Object.values(events)
+            .filter(entry => entry.type === 'VEVENT')
+            .map(iCalEvent => <Happening>{
+                id: iCalEvent.uid,
+                meetupName: icalInfo.meetupName,
+                eventName: iCalEvent.summary,
+                url: iCalEvent.url ?? (iCalEvent.location.startsWith('http') ? iCalEvent.location : undefined),
+                startTime: dayjs(iCalEvent.start).utc(),
+                endTime: dayjs(iCalEvent.end).utc(),
+            });
 
         context.log(JSON.stringify(happenings));
 
