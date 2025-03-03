@@ -17,7 +17,8 @@
     "dayjs-plugin-utc": "^0.1.2",
     "durable-functions": "^2.0.0",
     "ical-generator": "^3.4.1",
-    "jsdom": "^19.0.0"
+    "jsdom": "^19.0.0",
+    "node-ical": "^0.20.1"
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",

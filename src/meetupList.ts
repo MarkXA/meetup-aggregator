@@ -49,6 +49,12 @@ export const meetupList = {
         'ni-cyber-54621108933',
         'raise-ventures-15480456929'
     ],
+    'iCals': [
+        {
+            meetupName: 'BSides Belfast 2025',
+            url: 'https://calendar.google.com/calendar/ical/7b01d4195b92515ada80cb38f3e5475fae0b27e71123e7033bb25b1caa824bed%40group.calendar.google.com/public/basic.ics'
+        }
+    ],
     'manualEntry': [
         {
             id: 'airc2022@mxa.meetup.com',

@@ -4,9 +4,7 @@ import ical from 'ical-generator';
 import { Happening } from "../happening";
 
 const orchestrator = df.orchestrator(function* (context) {
-    // const happenings: Happening[] = [];
-
-    const tasks = ['FetchManual', 'FetchEventbrite', 'FetchMeetupCom'].map(
+    const tasks = ['FetchManual', 'FetchEventbrite', 'FetchMeetupCom', 'FetchIcal'].map(
         activity => context.df.callActivity(activity)
     );
 
