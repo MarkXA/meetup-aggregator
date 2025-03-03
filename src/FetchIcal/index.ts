@@ -25,7 +25,7 @@ const activityFunction: AzureFunction = async function (context: Context): Promi
                 id: iCalEvent.uid,
                 meetupName: icalInfo.meetupName,
                 eventName: iCalEvent.summary,
-                url: iCalEvent.url ?? (iCalEvent.location.startsWith('http') ? iCalEvent.location : undefined),
+                url: iCalEvent.url ?? ((iCalEvent.location && iCalEvent.location.startsWith('http')) ? iCalEvent.location : undefined),
                 startTime: dayjs(iCalEvent.start).utc(),
                 endTime: dayjs(iCalEvent.end).utc(),
             });
