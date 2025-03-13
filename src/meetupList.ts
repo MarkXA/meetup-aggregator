@@ -14,6 +14,7 @@ export const meetupList = {
         'belfastelixir',
         'BelfastJUG',
         'belfawst-meetup',
+        'databricks-belfast',
         'devbash',
         'DevOps-Belfast',
         'everything-data',
