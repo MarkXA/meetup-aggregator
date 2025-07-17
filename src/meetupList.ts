@@ -10,6 +10,7 @@ export const meetupList = {
         'Belfast-JS',
         'belfast-kafka',
         'belfast-lug',
+        'belfast-microsoft-fabric-power-bi-meetup',
         'Belfast-Software-Craftsmanship-Community',
         'belfastelixir',
         'BelfastJUG',
